@@ -16,15 +16,15 @@
 #define LOW  0
 #define HIGH 1
 
-#define POUT 16
+#define POUT 11
 
 static int GPIOExport(int pin);
 static int GPIOUnexport(int pin);
 static int GPIODirection(int pin, int dir);
-//static int GPIORead(int pin);
+static int GPIORead(int pin);
 static int GPIOWrite(int pin, int value);
 
-volatile sig_atomic_t done = 0;
+volatile int done = 0;
  
 void term(int signum)
 {
@@ -32,6 +32,7 @@ void term(int signum)
 }
 
 int main(int argc, char *argv[]) {
+	printf("START...\n");
 	
 	//catch SIGTERM for graceful exit
 	struct sigaction action;
@@ -39,6 +40,7 @@ int main(int argc, char *argv[]) {
     action.sa_handler = term;
     sigaction(SIGTERM, &action, NULL);
 	
+	printf("INIT GPIO\n");
     //Enable GPIO pins
     if (-1 == GPIOExport(POUT))
 		return(1);
@@ -47,11 +49,13 @@ int main(int argc, char *argv[]) {
     if (-1 == GPIODirection(POUT, OUT))
 		return(2);
 
-    while(!done) {
+    while(done == 0) {//while not done...
 		//Write GPIO value
+		printf("ON\n");
 		if (-1 == GPIOWrite(POUT, HIGH))
 			return(3);
 		usleep(1000 * 1000);
+		printf("OFF\n");
 		if (-1 == GPIOWrite(POUT, LOW))
 			return(3);
 		usleep(1000 * 1000);
