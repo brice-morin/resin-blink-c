@@ -122,7 +122,7 @@ int GPIODirection(int pin, int dir) {
     return(0);
 }
 
-/*int GPIORead(int pin) {
+int GPIORead(int pin) {
 #define VALUE_MAX 30
     char path[VALUE_MAX];
     char value_str[3];
@@ -143,7 +143,7 @@ int GPIODirection(int pin, int dir) {
     close(fd);
 
     return(atoi(value_str));
-}*/
+}
 
 int GPIOWrite(int pin, int value) {
     static const char s_values_str[] = "01";
