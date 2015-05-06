@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y build-essential && apt-get clean && rm 
 COPY . /app
 
 # Compile app
-CMD ["bash", "gcc -o /app/blink /app/blink.c"]
+RUN gcc -o /app/blink /app/blink.c
 
 # Start blink app
-CMD ["bash", "sudo /app/blink"]
+CMD ["sudo /app/blink"]
