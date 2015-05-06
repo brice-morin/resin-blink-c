@@ -49,7 +49,10 @@ int main(int argc, char *argv[]) {
 
     while(!done) {
 		//Write GPIO value
-		if (-1 == GPIOWrite(POUT, repeat % 2))
+		if (-1 == GPIOWrite(POUT, HIGH))
+			return(3);
+		usleep(1000 * 1000);
+		if (-1 == GPIOWrite(POUT, LOW))
 			return(3);
 		usleep(1000 * 1000);
     }
