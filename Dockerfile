@@ -4,9 +4,10 @@ FROM resin/rpi-raspbian:latest
 RUN apt-get update && apt-get install -y build-essential && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY . /app
+WORKDIR /app
 
 # Compile app
-RUN gcc -o /app/blink /app/blink.c
+RUN gcc -o blink blink.c
 
 # Start blink app
-CMD ["sudo /app/blink"]
+CMD ["./blink"]
